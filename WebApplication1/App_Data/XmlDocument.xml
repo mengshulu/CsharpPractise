@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebApplication1</name>
+    </assembly>
+    <members>
+        <member name="T:WebApplication1.Controllers.FileController">
+            <summary>
+            檔案上傳
+            </summary>
+        </member>
+        <member name="M:WebApplication1.Controllers.FileController.UploadFile">
+            <summary>
+            上傳單一檔案
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.FileController.UploadMultipleFiles">
+            <summary>
+            上傳多個檔案
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WebApplication1.Controllers.ProductController">
+            <summary>
+            這是產品 API，提供查詢、建立與刪除產品的功能
+            </summary>
+        </member>
+        <member name="M:WebApplication1.Controllers.ProductController.Get">
+            <summary>
+            取得全部產品
+            </summary>
+            <returns>產品集合</returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.ProductController.Get(System.Int32)">
+            <summary>
+            查找產品
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.ProductController.Post(WebApplication1.Models.Product)">
+            <summary>
+            新增產品
+            </summary>
+            <param name="product"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.ProductController.Put(System.Int32,WebApplication1.Models.Product)">
+            <summary>
+            更新產品
+            </summary>
+            <param name="id"></param>
+            <param name="product"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.ProductController.Delete(System.Int32)">
+            <summary>
+            刪除產品
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.ProductController.Export">
+            <summary>
+            匯出 excel
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

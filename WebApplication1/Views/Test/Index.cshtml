@@ -1,0 +1,36 @@
+@{
+    ViewBag.Title = "Student Page";
+    Layout = "../Shared/_LayoutNull.cshtml";
+    // Layout = null;
+    
+    var date = ViewBag.Date;
+    var student = ViewBag.Student;
+    var list = ViewBag.List;
+}
+
+<style>
+    div
+    {
+        margin-bottom: 10px;
+    }
+</style>
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    現在時間: @date.ToString("yyyy/MM/dd HH:mm:ss")
+</div>
+
+<div>
+    學生成績: @student.ToString()
+</div>
+
+<div>
+    學生成績列表:
+</div>
+@for (int i = 0; i < list.Count; i++)
+{
+    <div>
+        @list[i].ToString()
+    </div>
+}

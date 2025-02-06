@@ -1,0 +1,100 @@
+@model List<Dictionary<string, object>>
+@{
+    ViewBag.Title = "Index";
+}
+
+<script>
+    $.ajax({
+        url: '/api/product',  // API 路徑
+        type: 'GET',          // 使用 GET 請求
+        success: function (data) { // 請求成功的處理函數
+            console.log(data);  // 打印返回的資料
+        },
+        error: function (xhr, status, error) {  // 錯誤處理
+            alert("Error: " + error);
+        }
+    });
+
+</script>
+
+
+
+<h2>Index</h2>
+
+<div>
+    今年是：@DateTime.Now.Year 年
+    
+    hihi, @ViewData["Name"]
+    <br/>
+    Love, @ViewBag.Text
+    <br/>
+    Clothes, @TempData["Color"]
+    <br/>
+    
+</div>
+
+<div class="card">
+    <button id="export" type="button" class="btn btn-primary">匯出</button>
+</div>
+<script>
+    $('#export').click(() => {
+        $.ajax({
+            url: '/api/product/export',  // API 路徑
+            type: 'GET',          // 使用 GET 請求
+            xhrFields: {
+                responseType: 'blob'  // 設置響應類型為 blob
+            },
+            success: function (data, status, xhr) {
+                var blob = new Blob([data], { type: xhr.getResponseHeader('Content-Type') });
+                var downloadUrl = URL.createObjectURL(blob);
+                var a = document.createElement("a");
+                a.href = downloadUrl;
+                a.download = "exported_data.xlsx";  // 設置下載的文件名
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(downloadUrl);
+            },
+            error: function (xhr, status, error) {  // 錯誤處理
+                alert("Error: " + error);
+            }
+        });
+    });
+</script>
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var row in Model)
+    {
+        <tr>
+            @* @foreach (string item in row) *@
+            @* { *@
+            @*     <td>@item</td> *@
+            @* } *@
+            
+            @* @for (int index = 0; index < row.Length; index++) *@
+            @* { *@
+            @*     if (index > 0) *@
+            @*     { *@
+            @*         <td> @row["name"] </td> *@
+            @*     } *@
+            @*     else *@
+            @*     { *@
+            @*         <td>No. @row["id"]</td> *@
+            @*     } *@
+            @* } *@
+            <td>No. @row["id"]</td>
+            <td> @row["title"] </td>
+            <td><a href="@Url.Action("TableEdit", "Demo", new { id = row["id"] })">Edit(1)</a></td>
+            <td>@Html.ActionLink("Edit(2)", "TableEdit",new { id=row["title"] })</td>
+        </tr>
+    }
+    </tbody>
+</table>

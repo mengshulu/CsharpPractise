@@ -1,0 +1,29 @@
+@Model
+@{
+    Layout = "../Shared/_LayoutNull.cshtml";
+    
+    var date = ViewBag.Date;
+    var student = ViewBag.Student;
+    var list = ViewBag.List;
+}
+
+<div class="content">
+    @* <form style="margin-left:10px;" method="get" action="/Test/Transcripts"> *@
+
+    <form style="margin-left:10px;" method="post" action="/Test/Transcripts">
+        <div class="form-group">
+            <label for="id">學號</label>
+            <input type="text" class="form-control" id="id" name="id" aria-describedby="emailHelp" placeholder="Enter email" value="@Model.id">
+            <small id="emailHelp" class="form-text text-muted">請輸入數字</small>
+        </div>
+        <div class="form-group">
+            <label for="name">姓名</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Password" value="@Model.name">
+        </div>
+        <div class="form-group">
+            <label for="score">分數</label>
+            <input type="text" class="form-control" id="score" name="score" aria-describedby="emailHelp" placeholder="Enter email" value="@Model.score">
+        </div>
+        <button type="submit" class="btn btn-primary">確定</button>
+    </form>
+</div>
