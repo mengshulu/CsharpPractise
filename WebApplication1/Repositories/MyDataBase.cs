@@ -73,12 +73,15 @@ namespace WebApplication1.Repositories
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
+                    // 一定要有這一段來打開與資料庫的連線
                     connection.Open();
                     string query = "UPDATE TestTable SET Title = @Title WHERE ID = @ID";
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
+                        // command.Parameters.AddWithValue 可以防止注入攻擊 SQL injection
                         command.Parameters.AddWithValue("@Title", data.Title);
                         command.Parameters.AddWithValue("@ID", data.Id);
+                        // 執行
                         command.ExecuteNonQuery();
                     }
                 }
@@ -100,7 +103,11 @@ namespace WebApplication1.Repositories
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "INSERT INTO TestTable (id, title) VALUES (@id, @title)";
+                    
+                    // 兩種寫法都可以，指定欄位或是不指定欄位，但按照欄位順序新增值
+                    string query = "INSERT INTO TestTable Values(@id, @title)";
+                    // string query = "INSERT INTO TestTable (id, title) VALUES (@id, @title)";
+                    
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Title", data.Title);
@@ -150,6 +157,7 @@ namespace WebApplication1.Repositories
 
             try
             {
+                // using 會自動關閉資料庫連線，因此不用再 connection.Close();
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();

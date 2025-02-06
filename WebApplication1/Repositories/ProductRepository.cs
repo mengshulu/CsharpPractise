@@ -14,8 +14,12 @@ namespace WebApplication1.Repositories
         
         public static List<Product> GetAll()
         {
+            
+            
             MyDataBase db = new MyDataBase();
             List<Dictionary<string, object>> dataList = db.GetProducts();
+            // 得到資料以後，重新整理資料
+            // 不知道為什麼要多這段，感覺有點多餘，但又覺得好像可以讓人更清楚拿到了什麼資料
             return dataList.Select(row => new Product
             {
                 Id = Convert.ToInt32(row["id"]), // 確保欄位名稱對應

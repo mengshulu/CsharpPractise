@@ -26,6 +26,10 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public IEnumerable<Product> Get()
         {
+            // int id, string title,
+            // [FromBody] can be null
+            // search for id, title, limit, page, desc, asc
+            // 
             return ProductRepository.GetAll();
         }
 
@@ -132,18 +136,23 @@ namespace WebApplication1.Controllers
         // 這裡是你生成 Excel 檔案的邏輯
         private byte[] GenerateExcelFile()
         {
-            // 使用 EPPlus 或其他工具生成 Excel 檔案，並返回檔案內容（byte[]）
             using (var package = new OfficeOpenXml.ExcelPackage())
             {
                 var worksheet = package.Workbook.Worksheets.Add("Products");
+        
+                var list = ProductRepository.GetAll();
                 worksheet.Cells[1, 1].Value = "Id";
-                worksheet.Cells[1, 2].Value = "Name";
-                worksheet.Cells[1, 3].Value = "Price";
-                worksheet.Cells[2, 1].Value = 1;
-                worksheet.Cells[2, 2].Value = "Apple";
-                worksheet.Cells[2, 3].Value = 1.2;
-
-                return package.GetAsByteArray();  // 返回 Excel 檔案的 byte[] 內容
+                worksheet.Cells[1, 2].Value = "Title";
+        
+                int row = 2;
+                foreach (var product in list)
+                {
+                    worksheet.Cells[row, 1].Value = product.Id.ToString();
+                    worksheet.Cells[row, 2].Value = product.Title;
+                    row++;
+                }
+        
+                return package.GetAsByteArray();
             }
         }
 
