@@ -1,6 +1,7 @@
 using System.Web;
 using System.Web.Http;
 using WebApplication1.Helpers;
+using System.Web.Http.Cors;
 
 namespace WebApplication1
 {
@@ -8,6 +9,10 @@ namespace WebApplication1
     {
         public static void Register(HttpConfiguration config)
         {
+            // 啟用 CORS，允許所有來源請求
+            var cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(cors);
+            
             // 啟用屬性路由
             config.MapHttpAttributeRoutes();
 
