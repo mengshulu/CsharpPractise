@@ -49,6 +49,7 @@
                 var downloadUrl = URL.createObjectURL(blob);
                 var a = document.createElement("a");
                 a.href = downloadUrl;
+                var date = @DateTime.Now;
                 a.download = "exported_data.xlsx";  // 設置下載的文件名
                 document.body.appendChild(a);
                 a.click();

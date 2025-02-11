@@ -89,6 +89,7 @@ namespace WebApplication1.Repositories
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                
                 throw;
             }
 

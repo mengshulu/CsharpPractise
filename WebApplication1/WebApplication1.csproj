@@ -181,6 +181,7 @@
         <Compile Include="Controllers\FileController.cs" />
         <Compile Include="Controllers\HomeController.cs" />
         <Compile Include="Controllers\MySqlController.cs" />
+        <Compile Include="Controllers\NotificationController.cs" />
         <Compile Include="Controllers\ProductController.cs" />
         <Compile Include="Controllers\TestController.cs" />
         <Compile Include="Global.asax.cs">
@@ -217,6 +218,7 @@
         <Content Include="Views\Demo\Index.cshtml" />
         <Content Include="Views\Demo\TableEdit.cshtml" />
         <Content Include="Views\Home\News.cshtml" />
+        <Content Include="Views\Notification\Index.cshtml" />
         <Content Include="Views\Shared\_LayoutNull.cshtml" />
         <Content Include="Views\Test\CreateStudent.cshtml" />
         <Content Include="Views\Test\Index.cshtml" />
@@ -238,6 +240,8 @@
     </ItemGroup>
     <ItemGroup>
         <Folder Include="App_Data" />
+        <Folder Include="debug\" />
+        <Folder Include="x64\" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="fonts\glyphicons-halflings-regular.woff2" />
