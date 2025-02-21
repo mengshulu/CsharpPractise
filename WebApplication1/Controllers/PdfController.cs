@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.UI.WebControls;
 using iText.IO.Font;
 using iText.Kernel.Colors;
 using iText.Kernel.Font;
@@ -13,6 +14,7 @@ using iText.Kernel.Geom;
 using iText.Kernel.Pdf.Canvas;
 using iText.Layout.Borders;
 using iText.Layout.Properties;
+using Table = iText.Layout.Element.Table;
 
 namespace WebApplication1.Controllers
 {
@@ -38,34 +40,44 @@ namespace WebApplication1.Controllers
                         
                         
                         // ✅ 指定支援中文的字型 (SimSun 或 Noto Sans CJK)
-                        string fontPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "fonts", "SimSun.ttf");
+                        string fontPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "fonts", "NotoSansTC-VariableFont_wght.ttf");
                         // string fontPath = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.otf"; // Linux
                         PdfFont font = PdfFontFactory.CreateFont(fontPath, PdfEncodings.IDENTITY_H, true);
                         // 全域設定中文
-                        document.SetFont(font);
+                        document
+                            .SetFont(font)
+                            .SetBold()
+                            .SetFontColor(new DeviceRgb(28, 28, 28));
                         
                         
                         
                         
                         // === 定義 Lambda 方法 ===
                         Func<string, Cell> CreateCell = text => new Cell()
-                            .Add(new Paragraph(text))
-                            .SetTextAlignment(TextAlignment.CENTER);
+                            .Add(new Paragraph(text).SetFixedLeading(13))
+                            .SetTextAlignment(TextAlignment.CENTER)
+                            .SetVerticalAlignment(VerticalAlignment.MIDDLE)
+                            .SetPadding(5f);
                         Func<string, Cell> CreateBoldCell = text => new Cell()
                             .Add(new Paragraph(text)
+                                .SetFixedLeading(13)
                                 .SetBold())
+                            .SetPadding(5f)
+                            .SetVerticalAlignment(VerticalAlignment.MIDDLE)
                             .SetTextAlignment(TextAlignment.CENTER);
                         Func<string, Cell> CreateHighlightedCell = text =>
                             new Cell()
                                 .Add(new Paragraph(text)
-                                    .SetBold())
+                                    .SetBold().SetFixedLeading(13))
                                 // .SetBackgroundColor(ColorConstants.ORANGE)
+                                .SetPadding(5f)
+                                .SetVerticalAlignment(VerticalAlignment.MIDDLE)
                                 .SetBackgroundColor(new DeviceRgb(239, 126, 50))
                                 .SetTextAlignment(TextAlignment.CENTER);
                         
                         // === 建立橫向表格 ===
                         // ✅ 建立 Table，設定每個欄位寬度
-                        float[] columnWidths = { 40f, 60f, 50f, 50f, 50f };  // 自訂單元格寬度
+                        float[] columnWidths = { 45f, 65f, 55f, 55f, 55f };  // 自訂單元格寬度
                         Table table = new Table(UnitValue.CreatePointArray(columnWidths));
                         // Table table = new Table(5); // 5 欄的表格
                         // ✅ 讓 Table 離左邊 100px
@@ -104,11 +116,30 @@ namespace WebApplication1.Controllers
                         tableForTwo.SetWidth(UnitValue.CreatePercentValue(100));
                         
                         // ✅ 內部 Table (兩欄)
-                        float[] innerColWidths = { 5, 5 };  // 設定兩欄的寬度
-                        Table innerTable1 = new Table(UnitValue.CreatePointArray(innerColWidths));
+                        // cannot convert from double to float
+                        // float f = (float) d;
+                        // Or if you just need to express 1.2 as a float to start with, then use 1.2f.
+                        float[] innerColWidths = { 5.5f, (float)4.5 };  // 設定兩欄的寬度
+                        Table innerTable1 = new Table(UnitValue.CreatePercentArray(innerColWidths));
                         innerTable1.SetWidth(UnitValue.CreatePercentValue(100));
                         innerTable1.AddCell(new Cell().Add(new Paragraph("姓名：蘋果")).SetBorder(Border.NO_BORDER));
                         innerTable1.AddCell(new Cell().Add(new Paragraph("狀態：很好")).SetBorder(Border.NO_BORDER));
+                        innerTable1.AddCell(new Cell().Add(new Paragraph("姓名：香蕉")).SetBorder(Border.NO_BORDER));
+                        innerTable1.AddCell(new Cell().Add(new Paragraph("行政區：天神島")).SetBorder(Border.NO_BORDER));
+                        
+                        innerTable1.AddCell(new Cell().Add(new Paragraph("超好吃三明治：索爾的襪子")).SetBorder(Border.NO_BORDER));
+                        // 加入有虛線的表
+                        Table dashedTable = new Table(1);
+                        dashedTable
+                            .SetWidth(UnitValue.CreatePercentValue(100))
+                            .SetBorder(new DashedBorder(DeviceGray.GRAY, 1))
+                            .SetPadding(5f);
+                        dashedTable.AddCell(new Cell().Add(new Paragraph("宇宙明星：23位")).SetBorder(Border.NO_BORDER));
+                        Cell child = new Cell()
+                                .Add(new Paragraph("第一名: 金希澈").SetFontColor(new DeviceRgb(154, 154, 154))).SetPaddingLeft(55f);
+                        dashedTable.AddCell(child.SetBorder(Border.NO_BORDER));
+                        innerTable1.AddCell(new Cell().Add(dashedTable).SetBorder(Border.NO_BORDER));
+                        
 
                         Table innerTable2 = new Table(UnitValue.CreatePointArray(innerColWidths));
                         innerTable2.SetWidth(UnitValue.CreatePercentValue(100));
@@ -123,13 +154,12 @@ namespace WebApplication1.Controllers
                         
         
                         // 创建填充形状对象（矩形）
-                        Rectangle rectangle = new Rectangle(10, 10, 50, 50);
-                        
+                        // Rectangle rectangle = new Rectangle(10, 10, 50, 50);
                         // Create a Canvas object to draw on the page
-                        PdfCanvas canvas = new PdfCanvas(pdf.GetFirstPage());
-                        canvas.SetFillColor(ColorConstants.YELLOW);
-                        canvas.Rectangle(rectangle);
-                        canvas.Fill();
+                        // PdfCanvas canvas = new PdfCanvas(pdf.GetFirstPage());
+                        // canvas.SetFillColor(ColorConstants.YELLOW);
+                        // canvas.Rectangle(rectangle);
+                        // canvas.Fill();
         
         
                         // Add the cell to the document
