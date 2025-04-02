@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Microsoft.Ajax.Utilities;
 
 namespace WebApplication1.Controllers
 {
@@ -114,6 +115,8 @@ namespace WebApplication1.Controllers
         {
             // 假設你已經生成了 Excel 檔案的內容（以 byte[] 形式）
             byte[] fileContents = GenerateExcelFile();  // 這個方法是你生成 Excel 的邏輯
+            
+            
 
             // 創建 HttpResponseMessage 並設置檔案內容
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -122,13 +125,18 @@ namespace WebApplication1.Controllers
             };
 
             // 設定檔案的 Content-Type，告訴瀏覽器這是 Excel 檔案
+            // response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            // response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.ms-excel");
+            
+            
             response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
+            
+            
             // 設定檔案的下載名稱
-            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-            {
-                FileName = "Products.xlsx"
-            };
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            response.Content.Headers.ContentDisposition.FileName = "Products.xlsx";
+
 
             return response;
         }

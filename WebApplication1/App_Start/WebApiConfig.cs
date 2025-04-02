@@ -1,3 +1,4 @@
+using System;
 using System.Web;
 using System.Web.Http;
 using WebApplication1.Helpers;
@@ -15,7 +16,7 @@ namespace WebApplication1
             
             // 啟用屬性路由
             config.MapHttpAttributeRoutes();
-
+            
             // 預設路由：api/{controller}/{id}
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
@@ -24,14 +25,14 @@ namespace WebApplication1
             );
 
             // 啟用 JSON 回應格式
-            var formatter = config.Formatters.JsonFormatter;
-            // config.Services.Replace(typeof(System.Net.Http.Formatting.IContentNegotiator), new JsonContentNegotiator(formatter));
-            var isSwaggerRequest = HttpContext.Current?.Request.Url.AbsolutePath.Contains("/swagger") ?? false;
-
-            if (!isSwaggerRequest)
-            {
-                config.Services.Replace(typeof(System.Net.Http.Formatting.IContentNegotiator), new JsonContentNegotiator(formatter));
-            }
+            // var formatter = config.Formatters.JsonFormatter;
+            // // config.Services.Replace(typeof(System.Net.Http.Formatting.IContentNegotiator), new JsonContentNegotiator(formatter));
+            // var isSwaggerRequest = HttpContext.Current?.Request.Url.AbsolutePath.Contains("/swagger") ?? false;
+            //
+            // if (!isSwaggerRequest)
+            // {
+            //     config.Services.Replace(typeof(System.Net.Http.Formatting.IContentNegotiator), new JsonContentNegotiator(formatter));
+            // }
 
             config.EnsureInitialized();
         }

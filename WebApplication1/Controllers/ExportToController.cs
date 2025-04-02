@@ -5,7 +5,6 @@ using System.Web.Mvc;
 
 namespace WebApplication1.Controllers
 {
-    // 此方法會讓 swagger 出現 parameters null 錯誤
     public class ExportController : Controller
     {
         // 假設你有一個產品列表
@@ -47,9 +46,9 @@ namespace WebApplication1.Controllers
 
                 // 設置 HTTP 回應的內容類型和檔案名稱
                 byte[] fileContents = package.GetAsByteArray();
-                return File(fileContents, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Products.xlsx");
+                return File(fileContents, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    "Products.xlsx");
             }
         }
     }
-
 }

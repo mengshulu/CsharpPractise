@@ -227,11 +227,14 @@
         <Compile Include="Controllers\PdfController.cs" />
         <Compile Include="Controllers\ProductController.cs" />
         <Compile Include="Controllers\TestController.cs" />
+        <Compile Include="Controllers\UsersController.cs" />
         <Compile Include="Global.asax.cs">
             <DependentUpon>Global.asax</DependentUpon>
         </Compile>
         <Compile Include="Helpers\JsonContentNegotiator.cs" />
+        <Compile Include="Models\DbContext.cs" />
         <Compile Include="Models\Product.cs" />
+        <Compile Include="Models\User.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Repositories\MyDataBase.cs" />
         <Compile Include="Repositories\ProductRepository.cs" />
@@ -274,7 +277,7 @@
             <DependentUpon>Web.config</DependentUpon>
         </Content>
         <Content Include="Views\Web.config" />
-        <Content Include="Views\_ViewStart.cshtml" />
+        <Content Include="Views\Index.cshtml" />
         <Content Include="Views\Shared\Error.cshtml" />
         <Content Include="Views\Shared\_Layout.cshtml" />
         <Content Include="Views\Home\About.cshtml" />
