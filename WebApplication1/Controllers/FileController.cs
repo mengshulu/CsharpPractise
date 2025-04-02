@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Web;
@@ -28,13 +29,17 @@ namespace WebApplication1.Controllers
                 if (file != null && file.ContentLength > 0)
                 {
                     string fileName = Path.GetFileName(file.FileName);
-                    string uploadPath = Path.Combine(HttpContext.Current.Server.MapPath("~/Uploads"), fileName);
+                    Console.WriteLine("fileName: " + fileName);
+                    string uploadPath = HttpContext.Current.Server.MapPath("~/Uploads");
+                    Console.WriteLine("uploadPath: " + uploadPath);
                     // 如果資料夾不存在，則建立
                     if (!Directory.Exists(uploadPath))
                     {
+                        Console.WriteLine("創立資料夾");
                         Directory.CreateDirectory(uploadPath);
                     }
-                    file.SaveAs(uploadPath); // 儲存檔案
+                    fileName = Path.Combine(uploadPath, fileName);
+                    file.SaveAs(fileName); // 儲存檔案
 
                     return Ok(new { message = "檔案上傳成功", fileName });
                 }
